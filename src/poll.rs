@@ -1,7 +1,9 @@
 #[cfg(all(
     unix,
     not(mio_unsupported_force_poll_poll),
-    not(any(target_os = "solaris", target_os = "vita"))
+    not(any(target_os = "solaris",target_os = "vita",
+target_os = "horizon",
+target_os = "horizon"))
 ))]
 use std::os::unix::io::{AsRawFd, RawFd};
 #[cfg(all(debug_assertions, not(target_os = "wasi")))]
@@ -430,7 +432,9 @@ impl Poll {
 #[cfg(all(
     unix,
     not(mio_unsupported_force_poll_poll),
-    not(any(target_os = "solaris", target_os = "vita"))
+    not(any(target_os = "solaris",target_os = "vita",
+target_os = "horizon",
+target_os = "horizon"))
 ))]
 impl AsRawFd for Poll {
     fn as_raw_fd(&self) -> RawFd {
@@ -721,7 +725,9 @@ impl fmt::Debug for Registry {
 #[cfg(all(
     unix,
     not(mio_unsupported_force_poll_poll),
-    not(any(target_os = "solaris", target_os = "vita"))
+    not(any(target_os = "solaris",target_os = "vita",
+target_os = "horizon",
+target_os = "horizon"))
 ))]
 impl AsRawFd for Registry {
     fn as_raw_fd(&self) -> RawFd {
@@ -733,7 +739,9 @@ cfg_os_poll! {
     #[cfg(all(
         unix,
         not(mio_unsupported_force_poll_poll),
-        not(any(target_os = "solaris", target_os = "vita")),
+        not(any(target_os = "solaris",target_os = "vita",
+target_os = "horizon",
+target_os = "horizon")),
     ))]
     #[test]
     pub fn as_raw_fd() {

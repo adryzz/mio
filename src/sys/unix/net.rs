@@ -53,13 +53,16 @@ pub(crate) fn new_socket(domain: libc::c_int, socket_type: libc::c_int) -> io::R
         target_os = "watchos",
         target_os = "espidf",
         target_os = "vita",
+target_os = "horizon",
     ))]
     {
         if let Err(err) = syscall!(fcntl(socket, libc::F_SETFL, libc::O_NONBLOCK)) {
             let _ = syscall!(close(socket));
             return Err(err);
         }
-        #[cfg(not(any(target_os = "espidf", target_os = "vita")))]
+        #[cfg(not(any(target_os = "espidf",target_os = "vita",
+target_os = "horizon",
+target_os = "horizon")))]
         if let Err(err) = syscall!(fcntl(socket, libc::F_SETFD, libc::FD_CLOEXEC)) {
             let _ = syscall!(close(socket));
             return Err(err);
@@ -99,7 +102,7 @@ pub(crate) fn socket_addr(addr: &SocketAddr) -> (SocketAddrCRepr, libc::socklen_
                 sin_family: libc::AF_INET as libc::sa_family_t,
                 sin_port: addr.port().to_be(),
                 sin_addr,
-                #[cfg(not(target_os = "vita"))]
+                #[cfg(not(all(target_os = "vita")))]
                 sin_zero: [0; 8],
                 #[cfg(target_os = "vita")]
                 sin_zero: [0; 6],

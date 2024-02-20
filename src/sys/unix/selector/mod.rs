@@ -23,19 +23,23 @@ pub(crate) use self::epoll::{event, Event, Events, Selector};
 #[cfg(any(
     mio_unsupported_force_poll_poll,
     target_os = "solaris",
-    target_os = "vita"
+    target_os = "vita",
+target_os = "horizon"
 ))]
 mod poll;
 
 #[cfg(any(
     mio_unsupported_force_poll_poll,
     target_os = "solaris",
-    target_os = "vita"
+    target_os = "vita",
+target_os = "horizon"
 ))]
 pub(crate) use self::poll::{event, Event, Events, Selector};
 
 cfg_io_source! {
-    #[cfg(any(mio_unsupported_force_poll_poll, target_os = "solaris", target_os = "vita"))]
+    #[cfg(any(mio_unsupported_force_poll_poll, target_os = "solaris",target_os = "vita",
+target_os = "horizon",
+target_os = "horizon"))]
     pub(crate) use self::poll::IoSourceState;
 }
 
